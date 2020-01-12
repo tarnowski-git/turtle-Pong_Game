@@ -117,7 +117,7 @@ def bind(window, a, b):
     window.onkeypress(b.go_down, "Down")
 
 
-def game(window):
+def draw(window):
     a = Paddle(-350)
     b = Paddle(350)
     d = Pencil()
@@ -132,7 +132,7 @@ def game(window):
 def main():
     window = turtle.Screen()
     setup_window(window)
-    game(window)
+    draw(window)
 
 
 main()
