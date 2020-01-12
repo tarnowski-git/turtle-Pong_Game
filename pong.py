@@ -1,4 +1,5 @@
 import turtle
+import math
 
 
 def setup_window(window):
@@ -36,7 +37,7 @@ class Paddle():
 
 class Ball():
 
-    def __init__(self):
+    def __init__(self, a, b):
         self.turtle = turtle.Turtle()
         self.turtle.shape("circle")
         self.turtle.color("red")
@@ -44,8 +45,10 @@ class Ball():
         self.turtle.penup()
         self.turtle.goto(0, 0)
         # init move vector
-        self.dx = 1
-        self.dy = 1
+        self.dx = 0.5
+        self.dy = 0.5
+        self.a = a
+        self.b = b
 
     def move(self):
         self.turtle.setx(self.turtle.xcor()+self.dx)
@@ -53,19 +56,28 @@ class Ball():
 
     def colision(self):
         # up and down (height=600)
-        if self.turtle.ycor() > 280:
-            self.turtle.sety(280)
+        if self.turtle.ycor() > 290:
+            self.turtle.sety(290)
             self.dy *= -1
-        if self.turtle.ycor() < -280:
-            self.turtle.sety(-280)
+        if self.turtle.ycor() < -290:
+            self.turtle.sety(-290)
             self.dy *= -1
 
         # left and right (width=800)
-        if self.turtle.xcor() > 380:
-            self.turtle.setx(380)
+        if self.turtle.xcor() > 390:
+            self.turtle.setx(390)
             self.dx *= -1
-        if self.turtle.xcor() < -380:
-            self.turtle.setx(-380)
+        if self.turtle.xcor() < -390:
+            self.turtle.setx(-390)
+            self.dx *= -1
+
+        # paddles
+        if self.turtle.xcor() < -330 and math.fabs(self.turtle.ycor() - self.a.turtle.ycor()) < 50:
+            self.turtle.goto(-320, self.turtle.ycor())
+            self.dx *= -1
+
+        if self.turtle.xcor() > 330 and math.fabs(self.turtle.ycor() - self.b.turtle.ycor()) < 50:
+            self.turtle.goto(320, self.turtle.ycor())
             self.dx *= -1
 
 
@@ -80,7 +92,7 @@ def bind(window, a, b):
 def game(window):
     a = Paddle(-350)
     b = Paddle(350)
-    ball = Ball()
+    ball = Ball(a, b)
     bind(window, a, b)
     while True:
         window.update()

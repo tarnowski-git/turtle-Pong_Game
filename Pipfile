@@ -9,6 +9,7 @@ autopep8 = "*"
 
 [packages]
 turtle = "*"
+math = "*"
 
 [requires]
 python_version = "3.7"
