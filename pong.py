@@ -1,14 +1,7 @@
 import turtle
 import math
 
-
-def setup_window(window):
-    window.title("Pong Game")
-    window.setup(width=800, height=600)
-    # accelerate time program
-    window.tracer(0)
-    window.colormode(255)
-    window.bgcolor("green")
+from turtle import Turtle, Screen
 
 
 class Pencil():
@@ -18,15 +11,14 @@ class Pencil():
         self.turtle.hideturtle()
         self.turtle.color("white")
         self.turtle.shapesize(stretch_wid=10, stretch_len=1)
-        # erase the turtle pathway
         self.turtle.penup()
         self.turtle.goto(0, 250)
-        self.turtle.write("Player A: 0 Player B: 0",
+        self.turtle.write("Player A: 0 | Player B: 0",
                           align="center", font=("Arial", 30))
 
     def display(self, ponits_A, points_B):
         self.turtle.clear()
-        self.turtle.write("Player A: {} Player B: {}".format(
+        self.turtle.write("Player A: {} | Player B: {}".format(
             ponits_A, points_B), align="center", font=("Arial", 30))
 
 
@@ -109,30 +101,39 @@ class Ball():
             self.dx *= -1
 
 
-def bind(window, a, b):
-    window.listen()
-    window.onkeypress(a.go_up, "w")
-    window.onkeypress(a.go_down, "s")
-    window.onkeypress(b.go_up, "Up")
-    window.onkeypress(b.go_down, "Down")
+class Game():
+    """Make the game loop into a class.
+    Responsible for drawing and updating all our objects"""
+
+    def __init__(self):
+        # Set up the screen
+        self.screen = Screen()
+        self.screen.bgcolor("green")
+        self.screen.setup(width=800, height=600)
+        self.screen.title("Pong Game")
+        # accelerate time program
+        self.screen.tracer(0)
+        self.screen.colormode(255)
+        # initial objects
+        self.paddle_1 = Paddle(-350)
+        self.paddle_2 = Paddle(350)
+        self.score = Pencil()
+        self.ball = Ball(self.paddle_1, self.paddle_2, self.score)
+        # Create keyboard bindings
+        self.screen.listen()
+        self.screen.onkeypress(self.paddle_1.go_up, "w")
+        self.screen.onkeypress(self.paddle_1.go_down, "s")
+        self.screen.onkeypress(self.paddle_2.go_up, "Up")
+        self.screen.onkeypress(self.paddle_2.go_down, "Down")
+
+    def run(self):
+        """Make the game loop a function."""
+
+        while True:
+            self.screen.update()    # Display the screen.
+            self.ball.move()
+            self.ball.colision()
 
 
-def draw(window):
-    a = Paddle(-350)
-    b = Paddle(350)
-    d = Pencil()
-    ball = Ball(a, b, d)
-    bind(window, a, b)
-    while True:
-        window.update()
-        ball.move()
-        ball.colision()
-
-
-def main():
-    window = turtle.Screen()
-    setup_window(window)
-    draw(window)
-
-
-main()
+if __name__ == "__main__":
+    Game().run()
