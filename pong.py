@@ -1,5 +1,6 @@
 from turtle import Turtle, Screen
 from math import fabs
+import winsound
 
 
 def is_collision(obj_1, obj_2):
@@ -64,10 +65,12 @@ class Ball(Turtle):
     def bounce_off(self):
         """Function take ball bounce off a paddle"""
         if self.xcor() <= -330:
+            self.play_sound("bounce.wav")
             self.goto(-320, self.ycor())
             self.dx *= -1
 
         if self.xcor() >= 330:
+            self.play_sound("bounce.wav")
             self.goto(320, self.ycor())
             self.dx *= -1
 
@@ -75,21 +78,30 @@ class Ball(Turtle):
         """Function check if ball touch the border."""
         # up and down (height=600)
         if self.ycor() > 290:
+            self.play_sound("bounce.wav")
             self.sety(290)
             self.dy *= -1
-
+            
         if self.ycor() < -290:
+            self.play_sound("bounce.wav")
             self.sety(-290)
             self.dy *= -1
 
         # left and right (width=800)
         if self.xcor() > 390:
+            self.play_sound("bounce.wav")
             self.setx(390)
             self.dx *= -1
 
         if self.xcor() < -390:
+            self.play_sound("bounce.wav")
             self.setx(-390)
             self.dx *= -1
+
+    def play_sound(self, filename):
+        """Function working only for Windows"""
+        winsound.PlaySound("assets\\{}".format(
+            filename), winsound.SND_ASYNC)
 
 
 class Score(Turtle):
