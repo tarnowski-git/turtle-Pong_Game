@@ -1,11 +1,17 @@
 # turtle-Pong Game
 
+A simple Orinted Objected Programming Pong clone game using Python 3 with Turtle graphics module.
+
 ## Demo
+
+![pong-gif](https://user-images.githubusercontent.com/34337622/73022036-0ebbee80-3e29-11ea-8ed9-f559e1f71d2a.gif)
+
+> Control keys: 'W'-'S' (Player A), 'Up'-'Down' (Player B)
 
 ## Technologies
 
 -   Python 3.7
--   Turtle Module
+-   Turtle module
 
 ## Prerequisites
 
@@ -38,12 +44,12 @@ $ python pong.py
 
 ```
 # Windows
-pyinstaller --onefile --windowed part_manager.py
+pyinstaller --onefile --windowed pong.py
 ```
 
 ## Sources
 
-This application is based on [Adam Djellouli](https://www.youtube.com/channel/UCGPoHTVjMN77wcGknXPHl1Q) Tutorial.
+This game is based on [Adam Djellouli](https://www.youtube.com/channel/UCGPoHTVjMN77wcGknXPHl1Q) Tutorial.
 
 ## License
 
